@@ -28,7 +28,7 @@ def amortizacion(monto, tasa, cuotas):
     print(valor_cuota)
     saldo = monto
     interes_total=tasa/100
-    tabla_amortizacion = [["Cuota", "Saldo", "Pago interés", "Abono capital"], ["#", valor_cuota, tasa, monto]]
+    tabla_amortizacion = []
     if cuotas == 1:
         numero_cuota = 1
         interes_total = 0
@@ -48,9 +48,33 @@ def amortizacion(monto, tasa, cuotas):
 
     return tabla_amortizacion
 
+def extra(tabla_amortizacion, cuota, abono, interes, valor_cuotas):
+    saldo_restante = tabla_amortizacion[cuota-2][1]
+    porcentaje_interes = interes / 100
+    tabla_amortizacion_abono_extra = []
+    for j in range (tabla_amortizacion[cuota-1][0], 36):
+        numero_cuota = j
+        interes: float = round(porcentaje_interes * saldo_restante, 2)
+        if numero_cuota == tabla_amortizacion[cuota-1][0]:
+            abono_capital: float = round(abono - interes, 2)
+        else:
+            abono_capital: float = round(valor_cuotas - interes, 2)
+        saldo_restante: float = round(saldo_restante - abono_capital, 2)
+        if saldo_restante <= 0:
+            saldo_restante = 0
+        fila = [numero_cuota, saldo_restante, interes, abono_capital]
+        tabla_amortizacion_abono_extra.append(fila)
+        if saldo_restante <= 0:
+            break
+    return tabla_amortizacion_abono_extra
 
-monto = 480000
-cuotas = 48
-tasa_interes = 0
 
-print(amortizacion(monto, tasa_interes, cuotas))
+
+monto = float( input("Monto de la compra:") )
+cuotas = int( input("Numero de cuotas en que va a diferir la compra:") )
+tasa_interes = float( input("Tasa de interés de la tarjeta:") )
+
+tabla= amortizacion(monto,tasa_interes,cuotas)
+valor_cuota = cuota_mensual(monto,tasa_interes,cuotas)
+
+print(extra(tabla,10,53000, tasa_interes, valor_cuota))
