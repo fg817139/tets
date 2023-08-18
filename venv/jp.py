@@ -73,8 +73,9 @@ def extra(tabla_amortizacion, cuota, abono, interes, valor_cuotas):
 monto = float( input("Monto de la compra:") )
 cuotas = int( input("Numero de cuotas en que va a diferir la compra:") )
 tasa_interes = float( input("Tasa de interés de la tarjeta:") )
-
+abono_extra = float(input("ingrese abono extra:"))
+cuota_extra = int(input("ingrese cuota extra:"))
 tabla= amortizacion(monto,tasa_interes,cuotas)
 valor_cuota = cuota_mensual(monto,tasa_interes,cuotas)
 
-print(extra(tabla,10,53000, tasa_interes, valor_cuota))
+print(extra(tabla,cuota_extra,abono_extra, tasa_interes, valor_cuota))
