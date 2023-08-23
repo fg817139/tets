@@ -1,14 +1,14 @@
-import excepciones
+import exceptions
 
 
-def cuota_mensual(monto,tasa,cuotas):
+def monthly_quota(monto,tasa,cuotas):
     p = tasa/100
     if monto == 0:
-        raise excepciones.MontoNulo
+        raise exceptions.MontoNulo
     elif tasa*12 > 100:
-        raise excepciones.Usura
+        raise exceptions.Usura
     elif cuotas <= 0:
-        raise excepciones.CuotaNegativa
+        raise exceptions.CuotaNegativa
     elif cuotas == 1:
         return monto
     elif tasa == 0:
@@ -18,13 +18,13 @@ def cuota_mensual(monto,tasa,cuotas):
 
 
 def interes_total(monto,tasa,cuotas):
-    valor_cuota = cuota_mensual(monto, tasa, cuotas)
+    valor_cuota = monthly_quota(monto, tasa, cuotas)
     total_intereses = (valor_cuota * cuotas) - monto
     return total_intereses
 
 
 def amortizacion(monto, tasa, cuotas):
-    valor_cuota = cuota_mensual(monto, tasa, cuotas)
+    valor_cuota = monthly_quota(monto, tasa, cuotas)
     print(valor_cuota)
     saldo = monto
     interes_total=tasa/100
@@ -76,6 +76,6 @@ tasa_interes = float( input("Tasa de interés de la tarjeta:") )
 abono_extra = float(input("ingrese abono extra:"))
 cuota_extra = int(input("ingrese cuota extra:"))
 tabla= amortizacion(monto,tasa_interes,cuotas)
-valor_cuota = cuota_mensual(monto,tasa_interes,cuotas)
+valor_cuota = monthly_quota(monto,tasa_interes,cuotas)
 
 print(extra(tabla,cuota_extra,abono_extra, tasa_interes, valor_cuota))

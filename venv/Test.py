@@ -1,6 +1,6 @@
 import unittest
-import jp
-import excepciones
+import calculating
+import exceptions
 
 class TestCalcularIntereses(unittest.TestCase):
 
@@ -8,7 +8,7 @@ class TestCalcularIntereses(unittest.TestCase):
         monto = 200000
         tasa = 3.1
         cuotas = 36
-        total_intereses_calculados = round(jp.interes_total(monto, tasa, cuotas),2)
+        total_intereses_calculados = round(calculating.interes_total(monto, tasa, cuotas),2)
         total_intereses_esperados = 134726.53
         self.assertAlmostEqual(total_intereses_calculados, total_intereses_esperados)
 
@@ -16,7 +16,7 @@ class TestCalcularIntereses(unittest.TestCase):
         monto = 850000
         tasa = 3.4
         cuotas = 24
-        total_intereses_calculados = round(jp.interes_total(monto, tasa, cuotas), 2)
+        total_intereses_calculados = round(calculating.interes_total(monto, tasa, cuotas), 2)
         total_intereses_esperados = 407059.97
         self.assertAlmostEqual(total_intereses_calculados, total_intereses_esperados)
 
@@ -24,7 +24,7 @@ class TestCalcularIntereses(unittest.TestCase):
         monto = 480000
         tasa = 0
         cuotas = 48
-        resultado = round((jp.interes_total)(monto, tasa, cuotas), 2)
+        resultado = round((calculating.interes_total)(monto, tasa, cuotas), 2)
         esperado = 0
         self.assertEqual(resultado, esperado)
 
@@ -32,13 +32,13 @@ class TestCalcularIntereses(unittest.TestCase):
         monto = 50000
         tasa = 12.4
         coutas = 48
-        self.assertRaises(excepciones.Usura,jp.cuota_mensual,monto,tasa,coutas)
+        self.assertRaises(exceptions.Usura,calculating.cuota_mensual,monto,tasa,coutas)
 
     def testUnaCuota(self):
         monto = 90000
         tasa = 2.4
         cuotas = 1
-        resultado = round(jp.interes_total(monto,tasa,cuotas),2)
+        resultado = round(calculating.interes_total(monto,tasa,cuotas),2)
         esperado = 0
         self.assertEqual(resultado,esperado)
 
@@ -46,13 +46,13 @@ class TestCalcularIntereses(unittest.TestCase):
         monto = 0
         tasa = 2.4
         coutas = 60
-        self.assertRaises(excepciones.MontoNulo,jp.cuota_mensual, monto,tasa,coutas)
+        self.assertRaises(exceptions.MontoNulo,calculating.cuota_mensual, monto,tasa,coutas)
 
     def testCuotas(self):
         monto = 50000
         tasa = 1
         cuotas = -10
-        self.assertRaises(excepciones.CuotaNegativa, jp.cuota_mensual, monto, tasa, cuotas)
+        self.assertRaises(exceptions.CuotaNegativa, calculating.cuota_mensual, monto, tasa, cuotas)
 
 
 
