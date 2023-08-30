@@ -6,53 +6,53 @@ class TestCalcularIntereses(unittest.TestCase):
 
     def test_calculo_intereses_1(self):
         amount = 200000
-        tasa = 3.1
-        cuotas = 36
-        total_intereses_calculados = round(calculating.interes_total(monto, tasa, cuotas),2)
-        total_intereses_esperados = 134726.53
-        self.assertAlmostEqual(total_intereses_calculados, total_intereses_esperados)
+        interest = 3.1
+        periods = 36
+        total_calculated_interest = round(calculating.interes_total(amount,interest , periods),2)
+        total_expected_interest = 134726.53
+        self.assertAlmostEqual(total_calculated_interest, total_expected_interest)
 
     def test_calcular_intereses_2(self):
         amount = 850000
-        tasa = 3.4
-        cuotas = 24
-        total_intereses_calculados = round(calculating.interes_total(monto, tasa, cuotas), 2)
-        total_intereses_esperados = 407059.97
-        self.assertAlmostEqual(total_intereses_calculados, total_intereses_esperados)
+        interest = 3.4
+        periods = 24
+        total_calculated_interest = round(calculating.interes_total(amount, interest, periods), 2)
+        total_expected_interest = 407059.97
+        self.assertAlmostEqual(total_calculated_interest, total_expected_interest)
 
     def testNoIntereres(self):
         amount = 480000
-        tasa = 0
-        cuotas = 48
-        resultado = round((calculating.interes_total)(monto, tasa, cuotas), 2)
-        esperado = 0
-        self.assertEqual(resultado, esperado)
+        interest = 0
+        periods = 48
+        result = round((calculating.interes_total)(amount, interest, periods), 2)
+        expected = 0
+        self.assertEqual(result, expected)
 
     def testUsura(self):
         amount = 50000
-        tasa = 12.4
-        coutas = 48
-        self.assertRaises(exceptions.Usura,calculating.cuota_mensual,monto,tasa,coutas)
+        interest = 12.4
+        periods = 48
+        self.assertRaises(exceptions.Usura,calculating.cuota_mensual,amount,interest,periods)
 
     def testUnaCuota(self):
         amount = 90000
-        tasa = 2.4
-        cuotas = 1
-        resultado = round(calculating.interes_total(monto,tasa,cuotas),2)
-        esperado = 0
-        self.assertEqual(resultado,esperado)
+        interest = 2.4
+        periods = 1
+        result = round(calculating.interes_total(amount,interest,periods),2)
+        expected = 0
+        self.assertEqual(result,expected)
 
     def testNOMonto(self):
         amount = 0
-        tasa = 2.4
-        coutas = 60
-        self.assertRaises(exceptions.MontoNulo,calculating.cuota_mensual, monto,tasa,coutas)
+        interest = 2.4
+        periods = 60
+        self.assertRaises(exceptions.MontoNulo,calculating.cuota_mensual, amount,interest,periods)
 
     def testCuotas(self):
         amount = 50000
-        tasa = 1
-        cuotas = -10
-        self.assertRaises(exceptions.CuotaNegativa, calculating.cuota_mensual, monto, tasa, cuotas)
+        interest = 1
+        periods = -10
+        self.assertRaises(exceptions.CuotaNegativa, calculating.cuota_mensual, amount, interest, periods)
 
 
 
