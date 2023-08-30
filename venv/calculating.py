@@ -17,64 +17,64 @@ def monthly_quota(amount,interest,periods):
         return (amount * p)/(1 - (1 + p)**(-periods))
 
 
-def interes_total(amount,interest,cuotas):
-    valor_cuota = monthly_quota(amount, interest, cuotas)
-    total_intereses = (valor_cuota * cuotas) - amount
-    return total_intereses
+def total_interest(amount,interest,periods):
+    quota_value = monthly_quota(amount, interest, periods)
+    total_interest = (quota_value * periods) - amount
+    return total_interest
 
 
 def amortizacion(amount, interest, periods):
-    valor_cuota = monthly_quota(amount, interest, periods)
-    print(valor_cuota)
-    saldo = amount
-    interes_total=interest/100
-    tabla_amortizacion = []
+    quota_value = monthly_quota(amount, interest, periods)
+    print(quota_value)
+    balance = amount
+    total_interest=interest/100
+    total_amortization = []
     if periods == 1:
-        numero_cuota = 1
-        interes_total = 0
-        abono_capital = (valor_cuota - interes_total, )
-        fila = [numero_cuota, saldo, interes_total, abono_capital]
-        tabla_amortizacion.append(fila)
+        quota_number = 1
+        total_interest = 0
+        capital_credit = (quota_value - total_interest, )
+        row = [quota_number, balance, total_interest, capital_credit]
+        total_amortization.append(row)
     else:
-        for cuota in range(1, periods + 1):
-            numero_cuota = cuota
-            interes = (interes_total * saldo)
-            abono_capital = round(valor_cuota - interes)
-            saldo = (saldo - abono_capital)
+        for periods in range(1, periods + 1):
+            quota_number = periods
+            interest = (total_interest * balance)
+            capital_credit = round(quota_value - interest)
+            balance = (balance - capital_credit)
 
-            fila = [numero_cuota, saldo, interes, abono_capital]
-            tabla_amortizacion.append(fila)
-            print(fila)
+            row = [quota_number, balance, interest, capital_credit]
+            total_amortization.append(row)
+            print(row)
 
-    return tabla_amortizacion
+    return total_amortization
 
-def extra(tabla_amortizacion, cuota, abono, interes, valor_cuotas):
-    saldo_restante = tabla_amortizacion[cuota-2][1]
-    porcentaje_interes = interes / 100
-    tabla_amortizacion_abono_extra = []
-    for j in range (tabla_amortizacion[cuota-1][0], 36):
-        numero_cuota = j
-        interes: float = round(porcentaje_interes * saldo_restante, 2)
-        if numero_cuota == tabla_amortizacion[cuota-1][0]:
-            abono_capital: float = round(abono - interes, 2)
+def extra(total_amortization, periods, fertilizer, interest, quota_value):
+    subtracting_balance = total_amortization[periods-2][1]
+    interest_percentage = interest / 100
+    bonus_amortization_table_extra_bonus = []
+    for j in range (total_amortization[periods-1][0], 36):
+        quota_number = j
+        interest: float = round(interest_percentage * subtracting_balance, 2)
+        if quota_number == total_amortization[periods-1][0]:
+            capital_credit: float = round(fertilizer - interest, 2)
         else:
-            abono_capital: float = round(valor_cuotas - interes, 2)
-        saldo_restante: float = round(saldo_restante - abono_capital, 2)
-        if saldo_restante <= 0:
-            saldo_restante = 0
-        fila = [numero_cuota, saldo_restante, interes, abono_capital]
-        tabla_amortizacion_abono_extra.append(fila)
-        if saldo_restante <= 0:
+            capital_credit: float = round(quota_value - interest, 2)
+        subtracting_balance: float = round(subtracting_balance - capital_credit, 2)
+        if subtracting_balance <= 0:
+            subtracting_balance = 0
+        row = [quota_number, subtracting_balance, interest, capital_credit]
+        bonus_amortization_table_extra_bonus.append(row)
+        if subtracting_balance <= 0:
             break
-    return tabla_amortizacion_abono_extra
+    return bonus_amortization_table_extra_bonus
 
 
 amount = float( input("Monto de la compra:") )
-cuotas = int( input("Numero de cuotas en que va a diferir la compra:") )
+periods = int( input("Numero de cuotas en que va a diferir la compra:") )
 interest = float( input("Tasa de interés de la tarjeta:") )
-abono_extra = float(input("ingrese abono extra:"))
-cuota_extra = int(input("ingrese cuota extra:"))
-tabla= amortizacion(amount,interest,cuotas)
-valor_cuota = monthly_quota(amount,interest,cuotas)
+extra_mulch = float(input("ingrese abono extra:"))
+extra_quota = int(input("ingrese cuota extra:"))
+table= amortization(amount,interest,periods)
+quota_value = monthly_quota(amount,interest,periods)
 
-print(extra(tabla,cuota_extra,abono_extra, interest, valor_cuota))
+print(extra(table,extra_quota,extra_mulch, interest, quota_value))
