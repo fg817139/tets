@@ -3,10 +3,10 @@ import exceptions
 
 class CalcPayment:
 
-    def __init__(self, amount: float, interest_rate: float, number_of_payments: int):
+    def __init__(self, amount: float, interest_rate: float, number_payments: int):
         self.amount: float = amount
         self.interest_rate: float = interest_rate
-        self.number_of_payments: int = number_of_payments
+        self.number_payments: int = number_payments
         self.interest_percentage: float = self.interest_rate / 100
 
     def calc_monthly_payment(self) -> float:
@@ -14,31 +14,31 @@ class CalcPayment:
             raise exceptions.ZeroAmount
         elif self.interest_rate * 12 > 100:
             raise exceptions.Usury
-        elif self.number_of_payments <= 0:
+        elif self.number_payments <= 0:
             raise exceptions.NegativeNumberOfFees
-        elif self.number_of_payments == 1:
+        elif self.number_payments == 1:
             return self.amount
         elif self.interest_rate == 0:
-            return self.amount / self.number_of_payments
+            return self.amount / self.number_payments
         else:
             return (self.amount * self.interest_percentage) / (
-                        1 - (1 + self.interest_percentage) ** (-self.number_of_payments))
+                        1 - (1 + self.interest_percentage) ** (-self.number_payments))
 
     def calc_total_interest(self) -> float:
         payment_value: float = self.calc_monthly_payment()
-        total_interest: float = (payment_value * self.number_of_payments) - self.amount
+        total_interest: float = (payment_value * self.number_payments) - self.amount
         return total_interest
 
     def amortization(self) -> list:
         payment_value: float = round(self.calc_monthly_payment(), 2)
         balance: float = self.amount
         amortization_table: list = []
-        if self.number_of_payments == 1:
+        if self.number_payments == 1:
             capital_payment = payment_value
             row = [1, 0, 0, capital_payment]
             amortization_table.append(row)
         else:
-            for payment in range(1, self.number_of_payments + 1):
+            for payment in range(1, self.number_payments + 1):
                 payment_number = payment
                 interest: float = round(self.interest_percentage * balance, 2)
                 capital_payment: float = round(payment_value - interest, 2)
